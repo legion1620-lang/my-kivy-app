@@ -1,31 +1,21 @@
-name: Build APK
-on: [push, workflow_dispatch]
+[app]
+title = Word Card App
+package.name = wordcardapp
+package.domain = org.example
+source.dir = .
+source.include_exts = py,png,jpg,kv,atlas,json
+version = 0.1
+requirements = python3,kivy==2.3.0
+orientation = portrait
+fullscreen = 0
 
-jobs:
-  build:
-    runs-on: ubuntu-22.04
-    steps:
-      - uses: actions/checkout@v4
+# Критически важные настройки для GitHub Actions
+android.api = 33
+android.minapi = 21
+android.ndk_api = 21
+android.archs = arm64-v8a, armeabi-v7a
+android.allow_backup = True
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.10'
-
-      - name: Install dependencies
-        run: |
-          sudo apt update
-          sudo apt install -y git zip unzip openjdk-17-jdk python3-pip autoconf libtool pkg-config zlib1g-dev libncurses5-dev libssl-dev cmake libffi-dev libgomp1
-          pip install --upgrade pip
-          pip install buildozer kivy Cython==0.29.36
-
-      - name: Build APK with Buildozer
-        run: |
-          # Ключ --android автоматически принимает все лицензии SDK/NDK
-          buildozer android debug --android
-
-      - name: Upload APK Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: my-android-app
-          path: bin/*.apk
+[buildozer]
+log_level = 2
+warn_on_root = 1
