@@ -32,8 +32,6 @@ jobs:
       - name: Build APK with Buildozer
         run: |
           export JAVA_HOME=$JAVA_HOME_17_X64
-          # Очищаем старые остатки компиляции
-          buildozer android clean
           yes | buildozer android debug
           
       - name: Upload APK Artifact
