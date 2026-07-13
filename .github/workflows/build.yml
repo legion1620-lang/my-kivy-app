@@ -21,10 +21,10 @@ jobs:
 
       - name: Pre-accept Android Licenses
         run: |
-          # Принудительно создаем структуру и принимаем лицензии Google
           mkdir -p ~/.android
           touch ~/.android/repositories.cfg
-          buildozer android licenses
+          # Автоматически нажимаем 'y' на все лицензии Android SDK
+          yes | buildozer android licenses
 
       - name: Build APK with Buildozer
         run: |
